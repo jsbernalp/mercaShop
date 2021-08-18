@@ -6,6 +6,17 @@ plugins {
 }
 
 android {
+
+    signingConfigs {
+        Keystore {
+            keyAlias 'mercaShopKey'
+            keyPassword 'Jonathan9401'
+            storeFile file('C:\\keystoreMercaShop\\keyStoreMercaShop.jks')
+            storePassword 'Jonathan9401'
+        }
+    }
+
+
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -23,6 +34,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.Keystore
+            ext.betaDistributionGroupAliases = "testers"
+            firebaseAppDistribution {
+                serviceCredentialsFile = "$project.rootDir/app/mercashop-bdbd7-664b6d96a8eb.json"
+                releaseNotes = "Se implementa appDistribution"
+                groups = "testers"
+            }
         }
     }
     compileOptions {
