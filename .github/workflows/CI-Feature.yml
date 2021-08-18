@@ -26,8 +26,6 @@ jobs:
       run: ./gradlew clean
     - name: Build with Gradle
       run: ./gradlew build
-    - name: AssembleRelease
-      run: ./gradlew assembleRelease
-    - name: Distribution App
-      run: ./gradlew appDistributionUploadRelease
+    - name: UnitTest
+      run: ./gradlew test
       
