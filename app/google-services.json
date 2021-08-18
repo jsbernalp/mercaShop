@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "647015707879",
+    "project_id": "mercashop-bdbd7",
+    "storage_bucket": "mercashop-bdbd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647015707879:android:48ed733ad2ebc6aafb9e42",
+        "android_client_info": {
+          "package_name": "co.jonathanbernal.mercashop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647015707879-im4k3ljc6b62dafrguinhhb2sfgl97t3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFCOQsfZycfzQLYUR6c8PHia6xmaM72l8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647015707879-im4k3ljc6b62dafrguinhhb2sfgl97t3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
