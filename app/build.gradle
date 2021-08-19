@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.appdistribution'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -37,7 +38,7 @@ android {
             ext.betaDistributionGroupAliases = "testers"
             firebaseAppDistribution {
                 serviceCredentialsFile = "$project.rootDir/app/mercashop-bdbd7-664b6d96a8eb.json"
-                releaseNotes = "Se implementa appDistribution"
+                releaseNotes = "Se añaden las librerias de retrofit y dagger, junto con la configuracion del di"
                 groups = "testers"
             }
         }
@@ -64,5 +65,20 @@ dependencies {
 
 
     //Firebase
-    implementation 'com.google.firebase:firebase-analytics:19.0.0'
+    implementation "com.google.firebase:firebase-analytics:${firebaseAnalyticsVersion}"
+
+    //RETROFIT
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_rxjava2_version}"
+    implementation "com.squareup.retrofit2:converter-moshi:${converterMoshiVersion}"
+
+    //LoggingInterceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:${loggingVersion}"
+
+    //DAGGER2
+    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    kapt "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    implementation "com.google.dagger:dagger:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android:${daggerAndroidVersion}"
+    implementation "com.google.dagger:dagger-android-support:${daggerAndroidVersion}"
 }

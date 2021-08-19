@@ -3,6 +3,7 @@
     package="co.jonathanbernal.mercashop">
 
     <application
+        android:name=".di.MercaShopApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
