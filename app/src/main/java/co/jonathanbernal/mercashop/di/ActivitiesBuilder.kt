@@ -1,6 +1,6 @@
 package co.jonathanbernal.mercashop.di
 
-import co.jonathanbernal.mercashop.MainActivity
+import co.jonathanbernal.mercashop.presentation.home.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
