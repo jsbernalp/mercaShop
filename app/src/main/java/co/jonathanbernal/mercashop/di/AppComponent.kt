@@ -1,7 +1,8 @@
 package co.jonathanbernal.mercashop.di
 
-import android.app.Application
-import android.content.Context
+
+import co.jonathanbernal.mercashop.modules.NetworkModule
+import co.jonathanbernal.mercashop.modules.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -13,6 +14,8 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         AppModule::class,
+        NetworkModule::class,
+        RepositoryModule::class,
         ActivitiesBuilder::class]
 )
 interface AppComponent : AndroidInjector<MercaShopApplication> {

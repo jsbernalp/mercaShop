@@ -6,7 +6,10 @@ ext {
     daggerVersion = "2.35.1"
     daggerAndroidVersion = "2.35.1"
     converterMoshiVersion = retrofit_moshi_version
-    firebaseAnalyticsVersion = "19.0.0"
+    firebaseAnalyticsVersion = "19.0.1"
+    rxAndroidVersion = '2.1.1'
+    rxJavaVersion = '2.2.19'
+    junitVersion = '2.0.1'
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.5.10"
