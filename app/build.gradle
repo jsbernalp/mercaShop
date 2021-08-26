@@ -38,7 +38,7 @@ android {
             ext.betaDistributionGroupAliases = "testers"
             firebaseAppDistribution {
                 serviceCredentialsFile = "$project.rootDir/app/mercashop-bdbd7-664b6d96a8eb.json"
-                releaseNotes = "Se añaden las librerias de retrofit y dagger, junto con la configuracion del di"
+                releaseNotes = "Se implementa funcionalidad al buscador y se cambian los colores de la app"
                 groups = "testers"
             }
         }
@@ -49,6 +49,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
