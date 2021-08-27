@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    @Inject
     lateinit var searchViewModel: SearchViewModel
 
     @Inject
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        searchViewModel = ViewModelProvider(this, viewModelFactory).get(searchViewModel::class.java)
+        searchViewModel = ViewModelProvider(this, viewModelFactory)[SearchViewModel::class.java]
 
     }
 

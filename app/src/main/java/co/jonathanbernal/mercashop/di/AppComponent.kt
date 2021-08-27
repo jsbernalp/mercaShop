@@ -3,6 +3,7 @@ package co.jonathanbernal.mercashop.di
 
 import co.jonathanbernal.mercashop.modules.NetworkModule
 import co.jonathanbernal.mercashop.modules.RepositoryModule
+import co.jonathanbernal.mercashop.modules.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
+        ViewModelModule::class,
         AppModule::class,
         NetworkModule::class,
         RepositoryModule::class,

@@ -2,15 +2,13 @@ package co.jonathanbernal.mercashop.presentation.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import co.jonathanbernal.mercashop.presentation.search.SearchViewModel
 import javax.inject.Inject
+import javax.inject.Provider
+import javax.inject.Singleton
 
-class ViewModelFactory @Inject constructor(private val searchViewModel: SearchViewModel) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(searchViewModel::class.java)) {
-            return searchViewModel as T
-        }
-        throw IllegalArgumentException("uknown class name")
-    }
+@Singleton
+class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>,
+        @JvmSuppressWildcards Provider<ViewModel>>): ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+            viewModels[modelClass]?.get() as T
 }
