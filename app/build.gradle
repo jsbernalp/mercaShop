@@ -4,6 +4,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.appdistribution'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
 
     //LifeCycle
     implementation "android.arch.lifecycle:extensions:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
 
 
 

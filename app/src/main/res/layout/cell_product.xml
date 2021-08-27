@@ -10,8 +10,8 @@
             type="Integer" />
 
         <variable
-            name="itemSuggestion"
-            type="co.jonathanbernal.mercashop.presentation.search.SearchViewModel" />
+            name="itemProduct"
+            type="co.jonathanbernal.mercashop.presentation.results.ResultViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,19 +19,19 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textview_suggestion"
+            android:id="@+id/textview_name_product"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:text="@{itemSuggestion.getSuggestion(position)}"
+            android:text="@{itemProduct.getProduct(position).title}"
             android:textAlignment="center"
             android:textSize="@dimen/normal_text"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView_product"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,23 +39,14 @@
             android:id="@+id/imageView_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
             android:contentDescription="@string/icon_search"
-            app:layout_constraintBottom_toBottomOf="@+id/textview_suggestion"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textview_suggestion"
-            app:srcCompat="@drawable/ic_baseline_search_24" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textview_suggestion"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textview_suggestion"
-            app:srcCompat="@drawable/ic_baseline_north_west_24"
-            android:contentDescription="@string/icon_suggestion" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/sym_def_app_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

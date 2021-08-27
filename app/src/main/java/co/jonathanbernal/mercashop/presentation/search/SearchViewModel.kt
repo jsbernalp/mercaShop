@@ -5,31 +5,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
         private val searchUseCase: SearchUseCase
 ) : ViewModel() {
+
     var suggestions: MutableLiveData<List<String>> = MutableLiveData()
     var searchText: MutableLiveData<String> = MutableLiveData()
     var suggestionAdapter: SuggestionAdapter? = null
 
 
 
-    fun changeText(newText: String){
-        searchText.postValue(newText)
-    }
-
-
     fun getSuggestion(newText: String){
         searchUseCase.search(newText,10,10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .map {products ->
+                    products.map { product ->
+                        product.title
+                    }
+                }
                 .subscribe {
                     suggestions.postValue(it)
                 }.isDisposed

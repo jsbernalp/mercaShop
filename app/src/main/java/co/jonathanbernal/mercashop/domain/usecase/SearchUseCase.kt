@@ -10,13 +10,8 @@ class SearchUseCase @Inject constructor(
     private val iSearchyRepository: ISearchyRepository
 ) {
 
-    fun search(search: String, offset: Int, limit: Int): Observable<List<String>> {
+    fun search(search: String, offset: Int, limit: Int): Observable<List<Product>> {
         return iSearchyRepository.searchProducts(search,offset,limit)
-                .map {products ->
-                    products.map { product ->
-                        product.title
-                    }
-                }
     }
 
 }

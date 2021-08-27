@@ -19,8 +19,4 @@ object AppModule {
     @Provides
     fun provideApplication(application: MercaShopApplication): Application = application
 
-    @Provides
-    @Singleton
-    fun provideViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory = factory
-
 }

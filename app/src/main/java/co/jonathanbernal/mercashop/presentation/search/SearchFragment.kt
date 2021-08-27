@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import co.jonathanbernal.mercashop.R
@@ -21,7 +22,6 @@ class SearchFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    @Inject
     lateinit var searchViewModel: SearchViewModel
 
     lateinit var binding: FragmentSearchBinding
@@ -43,7 +43,7 @@ class SearchFragment : Fragment() {
         AndroidSupportInjection.inject(this)
 
         searchViewModel = activity.run {
-            ViewModelProviders.of(this!!, viewModelFactory).get(searchViewModel::class.java)
+            ViewModelProvider(this!!, viewModelFactory)[SearchViewModel::class.java]
         }
         binding.searchList = searchViewModel
         binding.recyclerViewSearchSuggestions.addItemDecoration(DividerItemDecoration(binding.recyclerViewSearchSuggestions.context,DividerItemDecoration.VERTICAL))
