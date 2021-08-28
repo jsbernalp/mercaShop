@@ -23,22 +23,56 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
             android:text="@{itemProduct.getProduct(position).title}"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textSize="@dimen/normal_text"
             android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:maxLines="3"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView_product"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/imageView_product" />
+
+        <TextView
+            android:id="@+id/textView_price_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@{itemProduct.getProductPrice(position)}"
+            android:textSize="@dimen/large_text"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textview_name_product"
+            app:layout_constraintTop_toBottomOf="@+id/textview_name_product" />
+
+        <TextView
+            android:id="@+id/textView_eshop"
+            visibility="@{itemProduct.haveSeller(position)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/eshop_label"
+            android:textSize="@dimen/small_text"
+            app:layout_constraintStart_toStartOf="@+id/textview_name_product"
+            app:layout_constraintTop_toBottomOf="@+id/textView_price_product" />
+
+        <TextView
+            android:id="@+id/textView_eshop_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textSize="@dimen/normal_text"
+            android:textStyle="bold"
+            android:text="@{itemProduct.getProduct(position).seller.eshop.nick_name}"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_eshop"
+            app:layout_constraintStart_toEndOf="@+id/textView_eshop"
+            app:layout_constraintTop_toTopOf="@+id/textView_eshop" />
 
         <ImageView
             android:id="@+id/imageView_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/width_image"
+            android:layout_height="@dimen/height_image"
             android:layout_marginStart="16dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
@@ -46,7 +80,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+            app:loadimage="@{itemProduct.getProduct(position).thumbnail}"/>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
