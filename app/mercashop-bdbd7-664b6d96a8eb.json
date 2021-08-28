@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mercashop-bdbd7",
+  "private_key_id": "664b6d96a8ebdcf25dd26b0334bd82922bbdcf7a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQC4D9bXzO9Pvm9+\nMa8b07JPrIoSG6bZe+iTQ6oraLuVRa/sgqC++aWCDtDmgAYKOFu/d4b8p6N9vBwg\n01wuO7dsww1Mfqyo3gXG8RNa8sNqdrSDzu4Oi+S9SYmxBkRhTKzNUsoYFyXZZOZQ\nFXMDWI1WOPXIPmvH129/zjDPNtl0U1YhVpoNOfWvD5q3e1hb9D4vxzbZPe6Ar3T9\nOx71FV49lx/W8Gzdvf5P2t9k0vDaM1OpzkGRkp2szunhTkPWxdr8JhJzK91WHxQg\nopLXN8y5sypP+f6IdD32aHAyQ83YZKySDg7+zXO372nsXC6qoO6+oON+4VPRWH7S\nwZqQcmabAgMBAAECgf9VrJGjPOn7UMiuDfPl3TVhp7h9QFUah5Wg6dFoHba0XFmg\nG96Qxuvqmq8HIDe8JPel4hynJVQdcbdaNILTYSsJTyl5O/V0a/bcJLYzAThAe/Ct\nESy0T/ewokr2rL5jgmM+9k1tgOcHGlubaaLdAfXEpKV3B8moJW/aJspL1bQmN5RV\nIRP9NJf7npwdlR6KM+hfGH2y+s6Lcl5oFYozb5ZYygNmjmqAx9mR8XgYlg2wBX4E\nPIQNExTdO7fCNZJQJ/GJfcBtc/qlm/qcAzjMrswJdMAp6Dmx0NEfRuowJcYVPwXJ\nNFYWZuxv3i5+m1Jx+LHxw61oB+dSkM3wSsR8b+ECgYEA5CqydCcRzNUmTKMCwfZV\n/chggj8jhNE1Hx2dDfSxsIPDDmI/d3EtSComHRdJt572pFSLROTyg2OXO+RO+Jsb\n43rNrPRuASHuq/24rQZqA0ZeI+avmrAkwrewpj7D76EQBxXXZ70cwce+PJzMJfOI\nUMxcy4W4ZBlPpmSDep5nk/UCgYEAzoPQApunmOCq3p2owK1Oupu5TUIfeqyLyat0\nfMMYAzm1lrlh1i9g5seRzAgxN6KsyFeYXH6PS0XjkkoEf8saI2WmT4ymmeTQlljT\nnAjQI5FXyfXGh9Eqyem/qpVJ19Ut4bP0WTVxGHopbfAVahNgKpfKUSKGqnNkje58\neZ50Bk8CgYBBQPDOhUny8dbFPi2QuVm4ffET7ujCmG5/2qFLF3smB1jmqTSLfWO8\n6skBsuJTUHQrZT57UpsE9puO9mmbcgjU0w81cqZvTnwK1kJVwaraCurri5MXQ18Q\nDSbJNNQmmUKTNCzpr00lInIGtbUw+Wg362pyjmjAv/hmlwJ/NARdbQKBgEJEne0Y\nUbGG9o20/b/GXSsYaV/XRg6xa7HtKNYYLI5saE7Tcgeu8GNdyvUz88csllE7epLD\nseuvo5T/123CmMKfDb0dHyDnAeAc5Np/IXsoWoleKrTOc/KS5YQxn554s95nRpOR\nyJbYLI8wqU5+pS9FwhBDCf+MQ8ofqyXDqOuVAoGAKfeEhqTbnIOpo8yqkdCV8PDW\nDGnQB5IzHCRlPJsUvxasRkaYs6arMU6QQOpG0wddi+EW7UPF0X/fp8v3EDLkhsna\nmjjuKF2oq9aQEl9KyuRd37RxWzi7Q4/wSA7i3FspDGAWGirTCqVE9vAcNT9V+XUs\nzawOl3X2hC9ioHnoKnU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "appdistributionmercashop@mercashop-bdbd7.iam.gserviceaccount.com",
+  "client_id": "106486966520859527767",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/appdistributionmercashop%40mercashop-bdbd7.iam.gserviceaccount.com"
+}
