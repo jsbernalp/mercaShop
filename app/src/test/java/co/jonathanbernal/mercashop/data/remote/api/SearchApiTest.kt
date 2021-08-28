@@ -1,9 +1,7 @@
 package co.jonathanbernal.mercashop.data.remote.api
 
 import co.jonathanbernal.mercashop.data.remote.service.MercaService
-import co.jonathanbernal.mercashop.domain.models.Paging
-import co.jonathanbernal.mercashop.domain.models.Product
-import co.jonathanbernal.mercashop.domain.models.SearchResponse
+import co.jonathanbernal.mercashop.domain.models.*
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
@@ -34,7 +32,9 @@ class SearchApiTest {
     @Test
     fun `searchProductsInApi, llama al metodo search de MercaService, una vez y retorna un objeto de tipo SearchResponse`(){
         val paging = Paging(123456,0,10)
-        val product = Product("MLA717131873","Silla Eames Comedor Base Madera Varios Colores - Pack X 4",13765.5,500,250,"http://http2.mlstatic.com/D_804309-MLA46605828763_072021-O.jpg")
+        val eshop = Eshop("asdasda")
+        val seller = Seller(eshop)
+        val product = Product("MLA717131873","Silla Eames Comedor Base Madera Varios Colores - Pack X 4",13765.5,seller,500,250,"http://http2.mlstatic.com/D_804309-MLA46605828763_072021-O.jpg")
         val results = arrayListOf(product)
         val searchResponse = SearchResponse("MLA",paging,results)
 

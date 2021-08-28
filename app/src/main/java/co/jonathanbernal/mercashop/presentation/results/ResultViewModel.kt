@@ -37,6 +37,16 @@ class ResultViewModel@Inject constructor(
         return productList.value?.get(position)
     }
 
+    fun getProductPrice(position: Int): String{
+        val productList: MutableLiveData<List<Product>> = products
+        return "$ ${productList.value?.get(position)?.price}"
+    }
+
+    fun haveSeller(position: Int): Boolean{
+        val productList: MutableLiveData<List<Product>> = products
+        return !(productList.value?.get(position)?.seller?.eshop?.nick_name).isNullOrEmpty()
+    }
+
     fun getRecyclerProductAdapter(): ProductAdapter?{
         productAdapter = ProductAdapter(this, R.layout.cell_product)
         return productAdapter

@@ -2,4 +2,5 @@
 <resources>
     <string name="icon_search">icono_busqueda</string>
     <string name="icon_suggestion">icono_sugerencia</string>
+    <string name="eshop_label">Vendido por:</string>
 </resources>
