@@ -1,4 +1,4 @@
-package co.jonathanbernal.mercashop.presentation.search
+package co.jonathanbernal.mercashop.presentation.recentsearch
 
 
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(
+class RecentSearchViewModel @Inject constructor(
         private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 

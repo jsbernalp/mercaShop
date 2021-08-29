@@ -1,14 +1,12 @@
-package co.jonathanbernal.mercashop.presentation.search
+package co.jonathanbernal.mercashop.presentation.recentsearch
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.databinding.FragmentSearchBinding
@@ -17,12 +15,12 @@ import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 
-class SearchFragment : Fragment() {
+class RecentSearchFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var searchViewModel: SearchViewModel
+    lateinit var recentSearchViewModel: RecentSearchViewModel
 
     lateinit var binding: FragmentSearchBinding
 
@@ -42,16 +40,16 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
 
-        searchViewModel = activity.run {
-            ViewModelProvider(this!!, viewModelFactory)[SearchViewModel::class.java]
+        recentSearchViewModel = activity.run {
+            ViewModelProvider(this!!, viewModelFactory)[RecentSearchViewModel::class.java]
         }
-        binding.searchList = searchViewModel
+        binding.searchList = recentSearchViewModel
         binding.recyclerViewSearchSuggestions.addItemDecoration(DividerItemDecoration(binding.recyclerViewSearchSuggestions.context,DividerItemDecoration.VERTICAL))
 
-        searchViewModel.getRecentSearchList()
+        recentSearchViewModel.getRecentSearchList()
 
-        searchViewModel.suggestions.observe(viewLifecycleOwner,{
-            searchViewModel.setData(it)
+        recentSearchViewModel.suggestions.observe(viewLifecycleOwner,{
+            recentSearchViewModel.setData(it)
         })
     }
 

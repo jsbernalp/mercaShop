@@ -13,7 +13,7 @@ import androidx.navigation.Navigation
 import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import co.jonathanbernal.mercashop.presentation.results.ResultViewModel
-import co.jonathanbernal.mercashop.presentation.search.SearchViewModel
+import co.jonathanbernal.mercashop.presentation.recentsearch.RecentSearchViewModel
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var searchViewModel: SearchViewModel
+    lateinit var recentSearchViewModel: RecentSearchViewModel
 
     lateinit var resultViewModel: ResultViewModel
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        searchViewModel = ViewModelProvider(this, viewModelFactory)[SearchViewModel::class.java]
+        recentSearchViewModel = ViewModelProvider(this, viewModelFactory)[RecentSearchViewModel::class.java]
         resultViewModel = ViewModelProvider(this, viewModelFactory)[ResultViewModel::class.java]
 
     }
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
     private fun changeSearchFragment(newText: String?) {
         Navigation.findNavController(this,R.id.nav_graph).navigate(R.id.searchFragment)
-        searchViewModel.searchText.postValue(newText)
+        recentSearchViewModel.searchText.postValue(newText)
     }
 
     private fun changeResultFragment(query: String) {

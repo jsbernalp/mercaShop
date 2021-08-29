@@ -6,13 +6,13 @@
    <data>
        <variable
            name="searchList"
-           type="co.jonathanbernal.mercashop.presentation.search.SearchViewModel" />
+           type="co.jonathanbernal.mercashop.presentation.recentsearch.RecentSearchViewModel" />
    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.search.SearchFragment">
+        tools:context=".presentation.recentsearch.RecentSearchFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_search_suggestions"
