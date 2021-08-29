@@ -15,7 +15,7 @@ interface RecentSearchDao {
 
 
     @Insert(
-        onConflict = OnConflictStrategy.REPLACE
+        onConflict = OnConflictStrategy.IGNORE
     )
     fun insertRecentSearch(recentSearch: RecentSearch)
 
