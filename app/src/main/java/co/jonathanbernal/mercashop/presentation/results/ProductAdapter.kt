@@ -1,6 +1,5 @@
 package co.jonathanbernal.mercashop.presentation.results
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil

@@ -1,11 +1,12 @@
 package co.jonathanbernal.mercashop.presentation.results
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,6 @@ import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.databinding.FragmentResultBinding
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_result.*
 import javax.inject.Inject
 
 
@@ -43,11 +43,11 @@ class ResultFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_result,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
         return binding.root
     }
 
@@ -61,23 +61,24 @@ class ResultFragment : Fragment() {
 
         binding.productList = resultViewModel
         binding.recyclerViewResultProduct.addItemDecoration(
-            DividerItemDecoration(binding.recyclerViewResultProduct.context,
-                DividerItemDecoration.VERTICAL)
+                DividerItemDecoration(binding.recyclerViewResultProduct.context,
+                        DividerItemDecoration.VERTICAL)
         )
         binding.recyclerViewResultProduct.run{
             addOnScrollListener(onScrollListener)
         }
 
 
-        resultViewModel.searchText.observe(viewLifecycleOwner,{query->
+        resultViewModel.searchText.observe(viewLifecycleOwner, { query ->
             resultViewModel.clearRecyclerView()
             resultViewModel.textSearch = query
             resultViewModel.getProductSearch()
         })
 
-        resultViewModel.products.observe(viewLifecycleOwner,{ products->
+        resultViewModel.products.observe(viewLifecycleOwner, { products ->
             resultViewModel.setData(products)
         })
 
     }
+
 }
