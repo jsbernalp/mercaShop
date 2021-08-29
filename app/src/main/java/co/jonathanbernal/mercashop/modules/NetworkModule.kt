@@ -20,7 +20,7 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("https://api.mercadolibre.com/sites/")
+                .baseUrl("https://api.mercadolibre.com/")
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(MoshiConverterFactory.create())
@@ -42,7 +42,9 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): Interceptor {
-        val interceptor = HttpLoggingInterceptor { message -> Log.e("Server Response", message) }
+        val interceptor = HttpLoggingInterceptor { message ->
+           // Log.e("Server Response", message)
+        }
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
     }

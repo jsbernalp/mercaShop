@@ -17,6 +17,7 @@ class ResultViewModel @Inject constructor(
     var downloadedProducts = ArrayList<Product>()
     var searchText: MutableLiveData<String> = MutableLiveData()
     var productAdapter: ProductAdapter? = null
+    var selectedProduct: MutableLiveData<String> = MutableLiveData()
     var textSearch: String? = null
     var offSet = 0
     var isDownloading = false
@@ -43,6 +44,9 @@ class ResultViewModel @Inject constructor(
         }
     }
 
+    fun openDetailProduct(position: Int){
+        selectedProduct.postValue(downloadedProducts[position].id)
+    }
 
     fun setData(list: List<Product>) {
         productAdapter?.addProductList(list)
