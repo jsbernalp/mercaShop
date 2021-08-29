@@ -9,9 +9,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.domain.models.Product
+import co.jonathanbernal.mercashop.presentation.detail.DetailViewModel
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import co.jonathanbernal.mercashop.presentation.results.ResultViewModel
 import co.jonathanbernal.mercashop.presentation.recentsearch.RecentSearchViewModel
@@ -30,6 +33,8 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
     lateinit var resultViewModel: ResultViewModel
 
+    lateinit var detailViewModel: DetailViewModel
+
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
@@ -45,11 +50,18 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         setContentView(R.layout.activity_main)
         recentSearchViewModel = ViewModelProvider(this, viewModelFactory)[RecentSearchViewModel::class.java]
         resultViewModel = ViewModelProvider(this, viewModelFactory)[ResultViewModel::class.java]
+        detailViewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
+
         recentSearchViewModel.textSuggestion.observe(this,{
             itemMenu!!.expandActionView()
             searchView!!.setQuery(it,true)
             searchView!!.clearFocus()
         })
+
+        resultViewModel.selectedProduct.observe(this,{idProduct ->
+            changeDetailFragment(idProduct)
+        })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,11 +89,17 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     private fun changeSearchFragment() {
-        Navigation.findNavController(this,R.id.nav_graph).navigate(R.id.searchFragment)
+        findNavController(this,R.id.nav_host).navigate(R.id.searchFragment)
+    }
+
+    private fun changeDetailFragment(idProduct: String) {
+        itemMenu!!.collapseActionView()
+        val bundle = bundleOf("idProduct" to idProduct)
+        findNavController(this,R.id.nav_host).navigate(R.id.detailFragment,bundle)
     }
 
     private fun changeResultFragment(query: String) {
-        Navigation.findNavController(this,R.id.nav_graph).navigate(R.id.resultFragment)
+        findNavController(this,R.id.nav_host).navigate(R.id.resultFragment)
         handler.removeCallbacksAndMessages(null)
         handler.postDelayed({
             resultViewModel.searchText.postValue(query)
@@ -89,6 +107,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
+
 
 
 }
