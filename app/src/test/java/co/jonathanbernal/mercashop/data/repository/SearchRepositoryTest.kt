@@ -1,5 +1,6 @@
 package co.jonathanbernal.mercashop.data.repository
 
+import co.jonathanbernal.mercashop.data.database.RecentSearchDao
 import co.jonathanbernal.mercashop.data.remote.api.SearchApi
 import co.jonathanbernal.mercashop.domain.models.*
 import com.nhaarman.mockitokotlin2.any
@@ -20,11 +21,14 @@ class SearchRepositoryTest {
     @Mock
     lateinit var searchApi: SearchApi
 
+    @Mock
+    lateinit var recentSearchDao: RecentSearchDao
+
     lateinit var searchRepository: SearchRepository
 
     @Before
     fun setUp() {
-        searchRepository = SearchRepository(searchApi)
+        searchRepository = SearchRepository(searchApi,recentSearchDao)
     }
 
     @Test
