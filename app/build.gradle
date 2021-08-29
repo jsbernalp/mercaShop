@@ -39,7 +39,7 @@ android {
             ext.betaDistributionGroupAliases = "testers"
             firebaseAppDistribution {
                 serviceCredentialsFile = "$project.rootDir/app/mercashop-bdbd7-664b6d96a8eb.json"
-                releaseNotes = "Se implementa la paginacion en el listado de resultados y se conserva la posicion al rotar la pantalla"
+                releaseNotes = "se almacenan las busquedas recientes y se muestran en el listado"
                 groups = "testers"
             }
         }
@@ -79,6 +79,10 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:2.3.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
 
+    //Room
+    implementation "androidx.room:room-ktx:2.3.0"
+    implementation "androidx.room:room-rxjava2:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
 
     //Glide
     implementation "com.github.bumptech.glide:glide:4.11.0"

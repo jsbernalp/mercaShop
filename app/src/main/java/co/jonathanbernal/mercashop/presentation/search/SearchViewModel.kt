@@ -19,23 +19,19 @@ class SearchViewModel @Inject constructor(
     var isDownloading = false
 
 
-
-    fun getSuggestion(newText: String) {
-        if (!isDownloading) {
-            isDownloading = true
-            searchUseCase.search(newText, 10, 10)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .map { products ->
-                        products.map { product ->
-                            product.title
-                        }
-                    }
-                    .subscribe {
-                        suggestions.postValue(it)
-                        isDownloading = false
-                    }.isDisposed
-        }
+    fun getRecentSearchList(){
+        searchUseCase.getRecentsSearchs()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { recentsSearches ->
+                recentsSearches.map { recentSearch ->
+                    recentSearch.text
+                }
+            }
+            .subscribe {
+                suggestions.postValue(it)
+                isDownloading = false
+            }.isDisposed
     }
 
     fun setData(list: List<String>) {

@@ -48,10 +48,7 @@ class SearchFragment : Fragment() {
         binding.searchList = searchViewModel
         binding.recyclerViewSearchSuggestions.addItemDecoration(DividerItemDecoration(binding.recyclerViewSearchSuggestions.context,DividerItemDecoration.VERTICAL))
 
-        searchViewModel.searchText.observe(viewLifecycleOwner,{text->
-            Log.e("SearchFragment","este es el texto $text")
-            searchViewModel.getSuggestion(text)
-        })
+        searchViewModel.getRecentSearchList()
 
         searchViewModel.suggestions.observe(viewLifecycleOwner,{
             searchViewModel.setData(it)

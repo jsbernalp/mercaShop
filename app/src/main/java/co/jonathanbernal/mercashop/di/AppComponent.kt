@@ -1,6 +1,7 @@
 package co.jonathanbernal.mercashop.di
 
 
+import co.jonathanbernal.mercashop.modules.DatabaseModule
 import co.jonathanbernal.mercashop.modules.NetworkModule
 import co.jonathanbernal.mercashop.modules.RepositoryModule
 import co.jonathanbernal.mercashop.modules.ViewModelModule
@@ -16,6 +17,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ViewModelModule::class,
         AppModule::class,
+        DatabaseModule::class,
         NetworkModule::class,
         RepositoryModule::class,
         ActivitiesBuilder::class]
