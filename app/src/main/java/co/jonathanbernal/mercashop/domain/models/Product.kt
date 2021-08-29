@@ -7,5 +7,6 @@ data class Product(
     val seller: Seller?,
     val available_quantity: Int,
     val sold_quantity: Int,
-    val thumbnail: String
+    val thumbnail: String,
+    val pictures: List<Picture>
     )

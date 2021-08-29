@@ -39,7 +39,7 @@ android {
             ext.betaDistributionGroupAliases = "testers"
             firebaseAppDistribution {
                 serviceCredentialsFile = "$project.rootDir/app/mercashop-bdbd7-664b6d96a8eb.json"
-                releaseNotes = "Se implementa la funcionalidad para poder seleccionar una busqueda reciente"
+                releaseNotes = "Se implementa la primera version del detalle del proceso"
                 groups = "testers"
             }
         }

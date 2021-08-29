@@ -1,6 +1,7 @@
 package co.jonathanbernal.mercashop.presentation.detail
 
 import android.util.Log
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.common.utils.addTo
@@ -15,7 +16,7 @@ class DetailViewModel @Inject constructor(
     private val getProductUseCase: GetProductUseCase
 ):ViewModel() {
 
-    var product: MutableLiveData<Product> = MutableLiveData()
+    var product = ObservableField<Product>()
     val compositeDisposable = CompositeDisposable()
 
     fun getProductDetail(id: String){
@@ -23,8 +24,17 @@ class DetailViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-               product.postValue(it)
+                Log.e("Prueba","esta es la informacion del producto $it")
+               product.set(it)
             }.addTo(compositeDisposable)
+    }
+
+    fun getPrice():String{
+        return if (product.get()?.price != null){
+            product.get()?.price.toString()
+        }else{
+            ""
+        }
     }
 
 }

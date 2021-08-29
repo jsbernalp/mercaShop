@@ -45,8 +45,10 @@ class DetailFragment : Fragment() {
         detailViewModel = activity.run {
             ViewModelProvider(this!!, viewModelFactory)[DetailViewModel::class.java]
         }
-
         detailViewModel.getProductDetail(product!!)
+        binding.productDetail = detailViewModel
+
+
     }
 
 }
