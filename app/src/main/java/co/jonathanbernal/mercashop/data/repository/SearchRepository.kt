@@ -23,7 +23,7 @@ class SearchRepository @Inject constructor(
             .map { it.results }
             .doOnNext { products ->
                 if (products.isNotEmpty() && offset == 0){
-                    val recentSearch = RecentSearch(search)
+                    val recentSearch = RecentSearch(search.toLowerCase())
                     insertRecentSearch(recentSearch)
                 }
             }

@@ -1,4 +1,4 @@
-package co.jonathanbernal.mercashop.presentation.search
+package co.jonathanbernal.mercashop.presentation.recentsearch
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.library.baseAdapters.BR
 
-class SuggestionAdapter internal constructor(var searchViewModel: SearchViewModel, var resource: Int) :
+class SuggestionAdapter internal constructor(var recentSearchViewModel: RecentSearchViewModel, var resource: Int) :
     RecyclerView.Adapter<SuggestionAdapter.ViewHolder>() {
 
     private var suggestionListAdapter: List<String> = mutableListOf()
@@ -22,7 +22,7 @@ class SuggestionAdapter internal constructor(var searchViewModel: SearchViewMode
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setSuggestionCard(searchViewModel, position)
+        holder.setSuggestionCard(recentSearchViewModel, position)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -50,8 +50,8 @@ class SuggestionAdapter internal constructor(var searchViewModel: SearchViewMode
             this.binding = binding
         }
 
-        fun setSuggestionCard(searchViewModel: SearchViewModel, position: Int) {
-            binding?.setVariable(BR.itemSuggestion, searchViewModel)
+        fun setSuggestionCard(recentSearchViewModel: RecentSearchViewModel, position: Int) {
+            binding?.setVariable(BR.itemSuggestion, recentSearchViewModel)
             binding?.setVariable(BR.position, position)
             binding?.executePendingBindings()
         }
