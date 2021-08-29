@@ -72,6 +72,7 @@ class ResultFragment : Fragment() {
         resultViewModel.searchText.observe(viewLifecycleOwner, { query ->
             resultViewModel.clearRecyclerView()
             resultViewModel.textSearch = query
+            resultViewModel.offSet = 0
             resultViewModel.getProductSearch()
         })
 

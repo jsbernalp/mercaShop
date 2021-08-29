@@ -21,10 +21,21 @@ class SearchRepository @Inject constructor(
     ): Observable<List<Product>> {
         return searchApi.searchProductsInApi(search, offset, limit)
             .map { it.results }
+            .doOnNext { products ->
+                if (products.isNotEmpty() && offset == 0){
+                    val recentSearch = RecentSearch(search)
+                    insertRecentSearch(recentSearch)
+                }
+            }
+
     }
 
     override fun getRecentsSearches(): Observable<List<RecentSearch>> {
         return recentSearchDao.getRecentsSearches()
+    }
+
+    override fun insertRecentSearch(recentSearch: RecentSearch) {
+        recentSearchDao.insertRecentSearch(recentSearch)
     }
 
 

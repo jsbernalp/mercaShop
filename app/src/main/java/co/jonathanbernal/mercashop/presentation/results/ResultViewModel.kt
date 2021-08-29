@@ -1,6 +1,5 @@
 package co.jonathanbernal.mercashop.presentation.results
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
@@ -10,7 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ResultViewModel@Inject constructor(
+class ResultViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
@@ -29,9 +28,9 @@ class ResultViewModel@Inject constructor(
 
     fun getProductSearch() {
         if (!textSearch.isNullOrEmpty()) {
-            if (!isDownloading){
+            if (!isDownloading) {
                 isDownloading = true
-            searchUseCase.search(textSearch!!, offSet, 30)
+                searchUseCase.search(textSearch!!, offSet, 30)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { products ->
@@ -44,34 +43,35 @@ class ResultViewModel@Inject constructor(
         }
     }
 
+
     fun setData(list: List<Product>) {
         productAdapter?.addProductList(list)
     }
 
-    fun clearRecyclerView(){
+    fun clearRecyclerView() {
         downloadedProducts.clear()
         productAdapter?.clearData()
     }
 
-    fun getProduct(position: Int): Product{
+    fun getProduct(position: Int): Product {
         return downloadedProducts[position]
     }
 
-    fun getProductPrice(position: Int): String{
+    fun getProductPrice(position: Int): String {
         return "$ ${downloadedProducts[position].price}"
     }
 
-    fun haveSeller(position: Int): Boolean{
+    fun haveSeller(position: Int): Boolean {
         return !(downloadedProducts[position].seller?.eshop?.nick_name).isNullOrEmpty()
     }
 
-    fun getRecyclerProductAdapter(): ProductAdapter?{
+    fun getRecyclerProductAdapter(): ProductAdapter? {
         productAdapter = ProductAdapter(this, R.layout.cell_product)
         return productAdapter
     }
 
     fun onLoadMoreData(visibleItemCount: Int, firstVisibleItemPosition: Int, totalItemCount: Int) {
-        if (!isInFooter(visibleItemCount,firstVisibleItemPosition,totalItemCount)){
+        if (!isInFooter(visibleItemCount, firstVisibleItemPosition, totalItemCount)) {
             return
         }
         offSet += PAGE_SIZE
@@ -80,9 +80,9 @@ class ResultViewModel@Inject constructor(
 
 
     private fun isInFooter(
-            visibleItemCount: Int,
-            firstVisibleItemPosition: Int,
-            totalItemCount: Int
+        visibleItemCount: Int,
+        firstVisibleItemPosition: Int,
+        totalItemCount: Int
     ): Boolean {
         return visibleItemCount + firstVisibleItemPosition >= totalItemCount
                 && firstVisibleItemPosition >= 0
