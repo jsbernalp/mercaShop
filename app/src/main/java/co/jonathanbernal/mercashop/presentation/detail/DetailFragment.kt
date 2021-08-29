@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.databinding.FragmentDetailBinding
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
@@ -23,12 +25,14 @@ class DetailFragment : Fragment() {
 
     lateinit var detailViewModel: DetailViewModel
 
+    lateinit var binding: FragmentDetailBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail, container, false)
+        return binding.root
     }
 
 
@@ -41,6 +45,8 @@ class DetailFragment : Fragment() {
         detailViewModel = activity.run {
             ViewModelProvider(this!!, viewModelFactory)[DetailViewModel::class.java]
         }
+
+        detailViewModel.getProductDetail(product!!)
     }
 
 }
