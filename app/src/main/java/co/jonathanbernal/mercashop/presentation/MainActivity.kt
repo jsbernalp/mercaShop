@@ -9,14 +9,9 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
-import co.jonathanbernal.mercashop.presentation.results.ResultFragment
 import co.jonathanbernal.mercashop.presentation.results.ResultViewModel
 import co.jonathanbernal.mercashop.presentation.search.SearchViewModel
 import dagger.android.AndroidInjection
@@ -58,6 +53,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
                 if (!query.isNullOrEmpty()){
                     changeResultFragment(query)
                 }
+                searchView.clearFocus()
                 return true
             }
 
@@ -73,11 +69,8 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     private fun changeSearchFragment(newText: String?) {
-        handler.removeCallbacksAndMessages(null)
-        handler.postDelayed({
-            Navigation.findNavController(this,R.id.nav_graph).navigate(R.id.searchFragment)
-            searchViewModel.searchText.postValue(newText)
-        }, 300)
+        Navigation.findNavController(this,R.id.nav_graph).navigate(R.id.searchFragment)
+        searchViewModel.searchText.postValue(newText)
     }
 
     private fun changeResultFragment(query: String) {
@@ -85,7 +78,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         handler.removeCallbacksAndMessages(null)
         handler.postDelayed({
             resultViewModel.searchText.postValue(query)
-        }, 100)
+        }, 300)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
