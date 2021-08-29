@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.databinding.FragmentDetailBinding
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
@@ -47,7 +47,12 @@ class DetailFragment : Fragment() {
         }
         detailViewModel.getProductDetail(product!!)
         binding.productDetail = detailViewModel
+        val manager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        binding.recyclerViewPicture.layoutManager = manager
 
+        detailViewModel.pictures.observe(viewLifecycleOwner,{pictures->
+            detailViewModel.setData(pictures)
+        })
 
     }
 
