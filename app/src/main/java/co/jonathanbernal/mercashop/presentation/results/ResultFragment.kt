@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.databinding.FragmentResultBinding
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
@@ -24,6 +26,21 @@ class ResultFragment : Fragment() {
     lateinit var resultViewModel: ResultViewModel
 
     lateinit var binding: FragmentResultBinding
+
+    private val onScrollListener: RecyclerView.OnScrollListener by lazy {
+        object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount: Int = layoutManager.childCount
+                val totalItemCount: Int = layoutManager.itemCount
+                val firstVisibleItemPosition: Int = layoutManager.findFirstVisibleItemPosition()
+
+                resultViewModel.onLoadMoreData(visibleItemCount, firstVisibleItemPosition, totalItemCount)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,10 +64,15 @@ class ResultFragment : Fragment() {
             DividerItemDecoration(binding.recyclerViewResultProduct.context,
                 DividerItemDecoration.VERTICAL)
         )
+        binding.recyclerViewResultProduct.run{
+            addOnScrollListener(onScrollListener)
+        }
 
 
         resultViewModel.searchText.observe(viewLifecycleOwner,{query->
-           resultViewModel.getProductSearch(query)
+            resultViewModel.clearRecyclerView()
+            resultViewModel.textSearch = query
+            resultViewModel.getProductSearch()
         })
 
         resultViewModel.products.observe(viewLifecycleOwner,{ products->

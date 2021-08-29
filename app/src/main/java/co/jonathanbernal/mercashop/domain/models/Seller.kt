@@ -1,3 +1,3 @@
 package co.jonathanbernal.mercashop.domain.models
 
-data class Seller(val eshop: Eshop)
+data class Seller(val eshop: Eshop?)

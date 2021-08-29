@@ -12,7 +12,7 @@ import androidx.databinding.library.baseAdapters.BR
 class ProductAdapter internal constructor(var resultViewModel: ResultViewModel, var resource: Int) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
-    private var productListAdapter: List<Product> = mutableListOf()
+    private var productListAdapter = ArrayList<Product>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,17 +31,20 @@ class ProductAdapter internal constructor(var resultViewModel: ResultViewModel, 
     }
 
     private fun getLayoutIdForPosition(position: Int): Int {
-        Log.e("Prueba","position $position")
         return resource
     }
 
     override fun getItemCount(): Int {
-        Log.e("Prueba","tamaño del listado ${productListAdapter.size}")
         return productListAdapter.size
     }
 
-    fun setProductList(products: List<Product>) {
-        this.productListAdapter = products.toList()
+    fun addProductList(products: List<Product>) {
+        this.productListAdapter.addAll(products)
+        notifyDataSetChanged()
+    }
+
+    fun clearData() {
+        this.productListAdapter.clear()
         notifyDataSetChanged()
     }
 

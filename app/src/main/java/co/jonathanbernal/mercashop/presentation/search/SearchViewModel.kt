@@ -16,21 +16,26 @@ class SearchViewModel @Inject constructor(
     var suggestions: MutableLiveData<List<String>> = MutableLiveData()
     var searchText: MutableLiveData<String> = MutableLiveData()
     var suggestionAdapter: SuggestionAdapter? = null
+    var isDownloading = false
 
 
 
-    fun getSuggestion(newText: String){
-        searchUseCase.search(newText,10,10)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map {products ->
-                    products.map { product ->
-                        product.title
+    fun getSuggestion(newText: String) {
+        if (!isDownloading) {
+            isDownloading = true
+            searchUseCase.search(newText, 10, 10)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .map { products ->
+                        products.map { product ->
+                            product.title
+                        }
                     }
-                }
-                .subscribe {
-                    suggestions.postValue(it)
-                }.isDisposed
+                    .subscribe {
+                        suggestions.postValue(it)
+                        isDownloading = false
+                    }.isDisposed
+        }
     }
 
     fun setData(list: List<String>) {
