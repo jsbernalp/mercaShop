@@ -38,7 +38,7 @@ class SearchRepositoryTest {
         val pictures = arrayListOf<Picture>(mock())
         val eshop = Eshop("asdasda")
         val seller = Seller(eshop)
-        val product = Product("MLA717131873","Silla Eames Comedor Base Madera Varios Colores - Pack X 4",13765.5,seller,500,250,"http://http2.mlstatic.com/D_804309-MLA46605828763_072021-O.jpg",pictures)
+        val product = Product("MLA717131873","Silla Eames Comedor Base Madera Varios Colores - Pack X 4",13765.5,123456.4,seller,500,250,"http://http2.mlstatic.com/D_804309-MLA46605828763_072021-O.jpg",pictures)
         val results = arrayListOf(product, product)
         val searchResponse = SearchResponse("MLA",paging,results)
 
