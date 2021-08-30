@@ -3,9 +3,10 @@ package co.jonathanbernal.mercashop.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import co.jonathanbernal.mercashop.di.ViewModelKey
+import co.jonathanbernal.mercashop.presentation.detail.DetailViewModel
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import co.jonathanbernal.mercashop.presentation.results.ResultViewModel
-import co.jonathanbernal.mercashop.presentation.search.SearchViewModel
+import co.jonathanbernal.mercashop.presentation.recentsearch.RecentSearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,12 +19,17 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SearchViewModel::class)
-    abstract fun searchViewModel(viewModel: SearchViewModel): ViewModel
+    @ViewModelKey(RecentSearchViewModel::class)
+    abstract fun searchViewModel(viewModelRecent: RecentSearchViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ResultViewModel::class)
     abstract fun resultViewModel(viewModel: ResultViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailViewModel::class)
+    abstract fun detailViewModel(viewModel: DetailViewModel):ViewModel
 
 }

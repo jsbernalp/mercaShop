@@ -1,36 +1,42 @@
-package co.jonathanbernal.mercashop.presentation.search
+package co.jonathanbernal.mercashop.presentation.recentsearch
 
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.domain.models.RecentSearch
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(
+class RecentSearchViewModel @Inject constructor(
         private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
     var suggestions: MutableLiveData<List<String>> = MutableLiveData()
-    var searchText: MutableLiveData<String> = MutableLiveData()
     var suggestionAdapter: SuggestionAdapter? = null
+    var isDownloading = false
+    var textSuggestion: MutableLiveData<String> = MutableLiveData()
 
 
-
-    fun getSuggestion(newText: String){
-        searchUseCase.search(newText,10,10)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map {products ->
-                    products.map { product ->
-                        product.title
-                    }
+    fun getRecentSearchList(){
+        searchUseCase.getRecentsSearchs()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { recentsSearches ->
+                recentsSearches.map { recentSearch ->
+                    recentSearch.text
                 }
-                .subscribe {
-                    suggestions.postValue(it)
-                }.isDisposed
+            }
+            .subscribe {
+                suggestions.postValue(it)
+                isDownloading = false
+            }.isDisposed
+    }
+
+    fun selectedSuggestion(position: Int){
+        textSuggestion.postValue(suggestions.value?.get(position))
     }
 
     fun setData(list: List<String>) {

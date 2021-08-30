@@ -1,17 +1,18 @@
-package co.jonathanbernal.mercashop.presentation.results
+package co.jonathanbernal.mercashop.presentation.detail
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import co.jonathanbernal.mercashop.domain.models.Product
+import co.jonathanbernal.mercashop.domain.models.Picture
 import androidx.databinding.library.baseAdapters.BR
 
-class ProductAdapter internal constructor(var resultViewModel: ResultViewModel, var resource: Int) :
-    RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class PictureAdapter internal constructor(var detailViewModel: DetailViewModel, var resource: Int) :
+    RecyclerView.Adapter<PictureAdapter.ViewHolder>() {
 
-    private var productListAdapter = ArrayList<Product>()
+    private var pictureListAdapter: List<Picture> = mutableListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,7 +23,7 @@ class ProductAdapter internal constructor(var resultViewModel: ResultViewModel, 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setProductCard(resultViewModel, position)
+        holder.setPictureCard(detailViewModel, position)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -34,16 +35,12 @@ class ProductAdapter internal constructor(var resultViewModel: ResultViewModel, 
     }
 
     override fun getItemCount(): Int {
-        return productListAdapter.size
+        Log.e("Prueba","tamaño del listado ${pictureListAdapter.size}")
+        return pictureListAdapter.size
     }
 
-    fun addProductList(products: List<Product>) {
-        this.productListAdapter.addAll(products)
-        notifyDataSetChanged()
-    }
-
-    fun clearData() {
-        this.productListAdapter.clear()
+    fun setPictureList(pictures: List<Picture>) {
+        this.pictureListAdapter = pictures.toList()
         notifyDataSetChanged()
     }
 
@@ -54,8 +51,8 @@ class ProductAdapter internal constructor(var resultViewModel: ResultViewModel, 
             this.binding = binding
         }
 
-        fun setProductCard(resultViewModel: ResultViewModel, position: Int) {
-            binding?.setVariable(BR.itemProduct, resultViewModel)
+        fun setPictureCard(detailViewModel: DetailViewModel, position: Int) {
+            binding?.setVariable(BR.itemPicture, detailViewModel)
             binding?.setVariable(BR.position, position)
             binding?.executePendingBindings()
         }

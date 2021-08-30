@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_host"
     app:startDestination="@id/searchFragment">
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="co.jonathanbernal.mercashop.presentation.search.SearchFragment"
+        android:name="co.jonathanbernal.mercashop.presentation.recentsearch.RecentSearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <argument
@@ -21,12 +21,23 @@
         android:id="@+id/resultFragment"
         android:name="co.jonathanbernal.mercashop.presentation.results.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="co.jonathanbernal.mercashop.presentation.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_detailFragment_to_resultFragment2"
+            app:destination="@id/resultFragment" />
+    </fragment>
     <activity
         android:id="@+id/mainActivity"
         android:name="co.jonathanbernal.mercashop.presentation.MainActivity"

@@ -16,7 +16,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> itemProduct.openDetailProduct(position)}"
+        >
 
         <TextView
             android:id="@+id/textview_name_product"

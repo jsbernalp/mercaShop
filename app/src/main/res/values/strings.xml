@@ -5,4 +5,8 @@
     <string name="icon_search">icono_busqueda</string>
     <string name="icon_suggestion">icono_sugerencia</string>
     <string name="eshop_label">Vendido por:</string>
+    <string name="recents_searches_label">Busquedas Recientes</string>
+    <string name="sold.quantity">Nuevo | %d vendidos</string>
+    <string name="price">Precio: $ %1$.0f</string>
+    <string name="original.price">Precio Original: <strike>$ %1$.0f</strike></string>
 </resources>
