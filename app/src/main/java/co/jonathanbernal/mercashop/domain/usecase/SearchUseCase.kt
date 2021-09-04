@@ -26,7 +26,9 @@ class SearchUseCase @Inject constructor(
 
     fun getRecentsSearchs(): Observable<Result> {
         return iSearchyRepository.getRecentsSearches()
-                .map { Result.Success(it) as Result  }
+                .map {
+                    Result.Success(it) as Result
+                }
                 .onErrorReturn { Result.Failure(it) }
     }
 
