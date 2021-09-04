@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.common.utils.isOnline
+import co.jonathanbernal.mercashop.common.utils.toast
 import co.jonathanbernal.mercashop.databinding.FragmentDetailBinding
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
@@ -38,17 +40,24 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
         val product = arguments?.getString("idProduct")
-        Log.e("Prueba","este es el producto que se recibe $product")
+        Log.e("Prueba", "este es el producto que se recibe $product")
 
         detailViewModel = activity.run {
             ViewModelProvider(this!!, viewModelFactory)[DetailViewModel::class.java]
         }
-        detailViewModel.getProductDetail(product!!)
+
+        if (isOnline(requireContext())) {
+            detailViewModel.getProductDetail(product!!)
+        } else {
+            requireContext().toast(R.string.isNotOnline)
+        }
+
         binding.productDetail = detailViewModel
-        val manager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+
+        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewPicture.layoutManager = manager
 
-        detailViewModel.pictures.observe(viewLifecycleOwner,{pictures->
+        detailViewModel.pictures.observe(viewLifecycleOwner, { pictures ->
             detailViewModel.setData(pictures)
         })
 

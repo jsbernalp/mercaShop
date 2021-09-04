@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.common.utils.isOnline
+import co.jonathanbernal.mercashop.common.utils.toast
 import co.jonathanbernal.mercashop.databinding.FragmentResultBinding
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
@@ -37,7 +38,8 @@ class ResultFragment : Fragment() {
                 val totalItemCount: Int = layoutManager.itemCount
                 val firstVisibleItemPosition: Int = layoutManager.findFirstVisibleItemPosition()
 
-                resultViewModel.onLoadMoreData(visibleItemCount, firstVisibleItemPosition, totalItemCount)
+                if (isOnline(requireContext())) resultViewModel.onLoadMoreData(visibleItemCount, firstVisibleItemPosition, totalItemCount)
+
             }
         }
     }
@@ -69,13 +71,21 @@ class ResultFragment : Fragment() {
 
 
         resultViewModel.searchText.observe(viewLifecycleOwner, { query ->
-            resultViewModel.clearRecyclerView()
-            resultViewModel.textSearch = query
-            resultViewModel.getProductSearch()
+            if (isOnline(requireContext())) {
+                resultViewModel.clearRecyclerView()
+                resultViewModel.textSearch = query
+                resultViewModel.getProductSearch()
+            } else {
+                requireContext().toast(R.string.isNotOnline)
+            }
         })
 
         resultViewModel.products.observe(viewLifecycleOwner, { products ->
             resultViewModel.setData(products)
+        })
+
+        resultViewModel.errorMessage.observe(viewLifecycleOwner,{message ->
+            requireContext().toast(getString(message))
         })
 
     }

@@ -19,6 +19,7 @@ class ResultViewModel @Inject constructor(
 ) : ViewModel() {
 
     val progressVisible = ObservableBoolean()
+    val errorMessage : MutableLiveData<Int> = MutableLiveData()
     var products: MutableLiveData<List<Product>> = MutableLiveData()
     var downloadedProducts = ArrayList<Product>()
     var searchText: MutableLiveData<String> = MutableLiveData()
@@ -53,12 +54,15 @@ class ResultViewModel @Inject constructor(
             is Result.Success -> {
                 this.downloadedProducts.addAll(result.data as List<Product>)
                 this.products.postValue(result.data)
+                isDownloading = false
             }
             is Result.Failure -> {
                 Log.e(TAG, "error al intentar buscar un producto ${result.throwable.message}")
+                errorMessage.postValue(R.string.errorInOperation)
+                isDownloading = false
             }
         }
-        isDownloading = false
+
     }
 
     fun openDetailProduct(position: Int) {

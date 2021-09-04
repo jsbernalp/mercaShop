@@ -6,4 +6,6 @@
     <string name="sold.quantity">Nuevo | %d vendidos</string>
     <string name="price">$ %1$.0f</string>
     <string name="original.price"><strike>$ %1$.0f</strike></string>
+    <string name="isNotOnline">Por favor, revisa tu conexion a internet e intenta buscar de nuevo</string>
+    <string name="errorInOperation">Ha ocurrido un error, por favor, intentalo de nuevo</string>
 </resources>

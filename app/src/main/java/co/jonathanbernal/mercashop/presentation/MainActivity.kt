@@ -13,7 +13,6 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import co.jonathanbernal.mercashop.R
-import co.jonathanbernal.mercashop.domain.models.Product
 import co.jonathanbernal.mercashop.presentation.detail.DetailViewModel
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import co.jonathanbernal.mercashop.presentation.results.ResultViewModel
