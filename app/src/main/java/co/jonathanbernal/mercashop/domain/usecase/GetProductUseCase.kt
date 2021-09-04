@@ -9,8 +9,15 @@ class GetProductUseCase  @Inject constructor(
     private val iProductRepository: IProductRepository
 ) {
 
-    fun getProductByIdProduct(id: String):Observable<Product>{
+    sealed class Result {
+        data class Success(val data: Product) : Result()
+        data class Failure(val throwable: Throwable) : Result()
+    }
+
+    fun getProductByIdProduct(id: String): Observable<Result> {
         return iProductRepository.getProduct(id)
+                .map { Result.Success(it) as Result }
+                .onErrorReturn { Result.Failure(it) }
     }
 
 }

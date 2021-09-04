@@ -1,11 +1,13 @@
 package co.jonathanbernal.mercashop.presentation.recentsearch
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
-import co.jonathanbernal.mercashop.domain.models.RecentSearch
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
+import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase.Result
+import co.jonathanbernal.mercashop.presentation.detail.DetailViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -19,20 +21,30 @@ class RecentSearchViewModel @Inject constructor(
     var isDownloading = false
     var textSuggestion: MutableLiveData<String> = MutableLiveData()
 
+    companion object {
+        private val TAG = RecentSearchViewModel::class.java.simpleName
+    }
+
 
     fun getRecentSearchList(){
         searchUseCase.getRecentsSearchs()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map { recentsSearches ->
-                recentsSearches.map { recentSearch ->
-                    recentSearch.text
-                }
-            }
-            .subscribe {
-                suggestions.postValue(it)
-                isDownloading = false
+            .subscribe {result->
+              handleRecentSearchResponse(result)
             }.isDisposed
+    }
+
+    fun handleRecentSearchResponse(result: Result){
+        when(result){
+            is Result.Success -> {
+                suggestions.postValue(result.data as List<String>)
+            }
+            is Result.Failure -> {
+                Log.e(TAG,"error al intentar obtener el listado de busquedas recientes ${result.throwable.message}")
+            }
+        }
+        isDownloading = false
     }
 
     fun selectedSuggestion(position: Int){

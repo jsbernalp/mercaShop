@@ -28,7 +28,7 @@ class ResultFragment : Fragment() {
     lateinit var binding: FragmentResultBinding
 
     private val onScrollListener: RecyclerView.OnScrollListener by lazy {
-        object: RecyclerView.OnScrollListener() {
+        object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -46,7 +46,6 @@ class ResultFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
         return binding.root
     }
@@ -64,7 +63,7 @@ class ResultFragment : Fragment() {
                 DividerItemDecoration(binding.recyclerViewResultProduct.context,
                         DividerItemDecoration.VERTICAL)
         )
-        binding.recyclerViewResultProduct.run{
+        binding.recyclerViewResultProduct.run {
             addOnScrollListener(onScrollListener)
         }
 
@@ -72,7 +71,6 @@ class ResultFragment : Fragment() {
         resultViewModel.searchText.observe(viewLifecycleOwner, { query ->
             resultViewModel.clearRecyclerView()
             resultViewModel.textSearch = query
-            resultViewModel.offSet = 0
             resultViewModel.getProductSearch()
         })
 

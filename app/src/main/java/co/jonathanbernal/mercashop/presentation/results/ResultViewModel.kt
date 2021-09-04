@@ -1,16 +1,18 @@
 package co.jonathanbernal.mercashop.presentation.results
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
 import co.jonathanbernal.mercashop.domain.models.Product
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
+import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class ResultViewModel @Inject constructor(
-    private val searchUseCase: SearchUseCase
+        private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
     var products: MutableLiveData<List<Product>> = MutableLiveData()
@@ -32,19 +34,28 @@ class ResultViewModel @Inject constructor(
             if (!isDownloading) {
                 isDownloading = true
                 searchUseCase.search(textSearch!!, offSet, 30)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { products ->
-                        this.downloadedProducts.addAll(products)
-                        this.products.postValue(products)
-                        isDownloading = false
-                    }
-                    .isDisposed
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { result -> handleSearchResponse(result) }
+                        .isDisposed
             }
         }
     }
 
-    fun openDetailProduct(position: Int){
+    fun handleSearchResponse(result: Result) {
+        when (result) {
+            is Result.Success -> {
+                this.downloadedProducts.addAll(result.data as List<Product>)
+                this.products.postValue(result.data)
+            }
+            is Result.Failure -> {
+                Log.e(TAG, "error al intentar buscar un producto ${result.throwable.message}")
+            }
+        }
+        isDownloading = false
+    }
+
+    fun openDetailProduct(position: Int) {
         selectedProduct.postValue(downloadedProducts[position].id)
     }
 
@@ -53,6 +64,7 @@ class ResultViewModel @Inject constructor(
     }
 
     fun clearRecyclerView() {
+        offSet = 0
         downloadedProducts.clear()
         productAdapter?.clearData()
     }
@@ -84,9 +96,9 @@ class ResultViewModel @Inject constructor(
 
 
     private fun isInFooter(
-        visibleItemCount: Int,
-        firstVisibleItemPosition: Int,
-        totalItemCount: Int
+            visibleItemCount: Int,
+            firstVisibleItemPosition: Int,
+            totalItemCount: Int
     ): Boolean {
         return visibleItemCount + firstVisibleItemPosition >= totalItemCount
                 && firstVisibleItemPosition >= 0
