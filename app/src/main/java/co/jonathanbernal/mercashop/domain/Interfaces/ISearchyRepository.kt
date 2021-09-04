@@ -8,7 +8,7 @@ import io.reactivex.Observable
 interface ISearchyRepository {
 
     fun searchProducts(search: String, offset: Int, limit: Int): Observable<List<Product>>
-    fun getRecentsSearches():Observable<List<RecentSearch>>
+    fun getRecentsSearches():Observable<List<String>>
 
     fun insertRecentSearch(recentSearch: RecentSearch)
 }

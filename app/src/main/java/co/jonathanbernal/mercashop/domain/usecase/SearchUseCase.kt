@@ -11,12 +11,25 @@ class SearchUseCase @Inject constructor(
     private val iSearchyRepository: ISearchyRepository
 ) {
 
-    fun search(search: String, offset: Int, limit: Int): Observable<List<Product>> {
-        return iSearchyRepository.searchProducts(search,offset,limit)
+    sealed class Result {
+        object Loading : Result()
+        data class Success(val data: List<Any>) : Result()
+        data class Failure(val throwable: Throwable) : Result()
     }
 
-    fun getRecentsSearchs():Observable<List<RecentSearch>>{
+    fun search(search: String, offset: Int, limit: Int): Observable<Result> {
+        return iSearchyRepository.searchProducts(search,offset,limit)
+                .map { Result.Success(it) as Result  }
+                .onErrorReturn { Result.Failure(it) }
+                .startWith(Result.Loading)
+    }
+
+    fun getRecentsSearchs(): Observable<Result> {
         return iSearchyRepository.getRecentsSearches()
+                .map {
+                    Result.Success(it) as Result
+                }
+                .onErrorReturn { Result.Failure(it) }
     }
 
 }

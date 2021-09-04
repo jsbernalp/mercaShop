@@ -30,8 +30,12 @@ class SearchRepository @Inject constructor(
 
     }
 
-    override fun getRecentsSearches(): Observable<List<RecentSearch>> {
+    override fun getRecentsSearches(): Observable<List<String>> {
         return recentSearchDao.getRecentsSearches()
+                .map { recentsSearches ->
+                    recentsSearches.map { recentSearch ->
+                        recentSearch.text
+                    } }
     }
 
     override fun insertRecentSearch(recentSearch: RecentSearch) {

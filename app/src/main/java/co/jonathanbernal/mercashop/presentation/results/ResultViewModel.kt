@@ -1,18 +1,25 @@
 package co.jonathanbernal.mercashop.presentation.results
 
+import android.util.Log
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.common.utils.addTo
 import co.jonathanbernal.mercashop.domain.models.Product
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
+import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class ResultViewModel @Inject constructor(
-    private val searchUseCase: SearchUseCase
+        private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
+    val progressVisible = ObservableBoolean()
+    val errorMessage : MutableLiveData<Int> = MutableLiveData()
     var products: MutableLiveData<List<Product>> = MutableLiveData()
     var downloadedProducts = ArrayList<Product>()
     var searchText: MutableLiveData<String> = MutableLiveData()
@@ -21,6 +28,7 @@ class ResultViewModel @Inject constructor(
     var textSearch: String? = null
     var offSet = 0
     var isDownloading = false
+    val disposables = CompositeDisposable()
 
     companion object {
         private val TAG = ResultViewModel::class.java.simpleName
@@ -32,19 +40,32 @@ class ResultViewModel @Inject constructor(
             if (!isDownloading) {
                 isDownloading = true
                 searchUseCase.search(textSearch!!, offSet, 30)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { products ->
-                        this.downloadedProducts.addAll(products)
-                        this.products.postValue(products)
-                        isDownloading = false
-                    }
-                    .isDisposed
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { result -> handleSearchResponse(result) }
+                        .addTo(disposables)
             }
         }
     }
 
-    fun openDetailProduct(position: Int){
+    fun handleSearchResponse(result: Result) {
+        progressVisible.set(Result.Loading == result)
+        when (result) {
+            is Result.Success -> {
+                this.downloadedProducts.addAll(result.data as List<Product>)
+                this.products.postValue(result.data)
+                isDownloading = false
+            }
+            is Result.Failure -> {
+                Log.e(TAG, "error al intentar buscar un producto ${result.throwable.message}")
+                errorMessage.postValue(R.string.errorInOperation)
+                isDownloading = false
+            }
+        }
+
+    }
+
+    fun openDetailProduct(position: Int) {
         selectedProduct.postValue(downloadedProducts[position].id)
     }
 
@@ -53,6 +74,7 @@ class ResultViewModel @Inject constructor(
     }
 
     fun clearRecyclerView() {
+        offSet = 0
         downloadedProducts.clear()
         productAdapter?.clearData()
     }
@@ -84,13 +106,16 @@ class ResultViewModel @Inject constructor(
 
 
     private fun isInFooter(
-        visibleItemCount: Int,
-        firstVisibleItemPosition: Int,
-        totalItemCount: Int
+            visibleItemCount: Int,
+            firstVisibleItemPosition: Int,
+            totalItemCount: Int
     ): Boolean {
         return visibleItemCount + firstVisibleItemPosition >= totalItemCount
                 && firstVisibleItemPosition >= 0
                 && totalItemCount >= PAGE_SIZE
     }
 
+    fun unbound() {
+        disposables.clear()
+    }
 }

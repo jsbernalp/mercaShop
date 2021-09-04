@@ -43,7 +43,7 @@ class NetworkModule {
     @Singleton
     fun provideLoggingInterceptor(): Interceptor {
         val interceptor = HttpLoggingInterceptor { message ->
-           // Log.e("Server Response", message)
+           Log.e("Server Response", message)
         }
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor

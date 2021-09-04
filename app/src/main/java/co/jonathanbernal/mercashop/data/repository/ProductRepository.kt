@@ -15,5 +15,4 @@ class ProductRepository @Inject constructor(
        return productApi.getProcessById(idProduct)
            .map { it[0].body }
     }
-
 }
