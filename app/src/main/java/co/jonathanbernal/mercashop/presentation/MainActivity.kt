@@ -59,7 +59,9 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         })
 
         resultViewModel.selectedProduct.observe(this,{idProduct ->
+            resultViewModel.unbound()
             changeDetailFragment(idProduct)
+            searchView!!.clearFocus()
         })
 
     }
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()){
+                    resultViewModel.unbound()
                     changeResultFragment(query)
                 }
                 searchView!!.clearFocus()
@@ -108,6 +111,13 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        recentSearchViewModel.unbound()
+        detailViewModel.unbound()
+        resultViewModel.unbound()
+    }
 
 
 }

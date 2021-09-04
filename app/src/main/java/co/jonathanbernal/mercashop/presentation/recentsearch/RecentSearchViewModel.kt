@@ -5,10 +5,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.common.utils.addTo
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase.Result
-import co.jonathanbernal.mercashop.presentation.detail.DetailViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -20,6 +21,7 @@ class RecentSearchViewModel @Inject constructor(
     var suggestionAdapter: SuggestionAdapter? = null
     var isDownloading = false
     var textSuggestion: MutableLiveData<String> = MutableLiveData()
+    val disposables = CompositeDisposable()
 
     companion object {
         private val TAG = RecentSearchViewModel::class.java.simpleName
@@ -32,7 +34,7 @@ class RecentSearchViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {result->
               handleRecentSearchResponse(result)
-            }.isDisposed
+            }.addTo(disposables)
     }
 
     fun handleRecentSearchResponse(result: Result){
@@ -63,5 +65,9 @@ class RecentSearchViewModel @Inject constructor(
     fun getRecyclerSuggestionAdapter():SuggestionAdapter?{
         suggestionAdapter = SuggestionAdapter(this, R.layout.cell_suggestion)
         return suggestionAdapter
+    }
+
+    fun unbound() {
+        disposables.clear()
     }
 }

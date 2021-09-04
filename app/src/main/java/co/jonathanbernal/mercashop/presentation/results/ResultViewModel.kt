@@ -5,10 +5,12 @@ import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.common.utils.addTo
 import co.jonathanbernal.mercashop.domain.models.Product
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
 import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -25,6 +27,7 @@ class ResultViewModel @Inject constructor(
     var textSearch: String? = null
     var offSet = 0
     var isDownloading = false
+    val disposables = CompositeDisposable()
 
     companion object {
         private val TAG = ResultViewModel::class.java.simpleName
@@ -39,7 +42,7 @@ class ResultViewModel @Inject constructor(
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe { result -> handleSearchResponse(result) }
-                        .isDisposed
+                        .addTo(disposables)
             }
         }
     }
@@ -108,4 +111,7 @@ class ResultViewModel @Inject constructor(
                 && totalItemCount >= PAGE_SIZE
     }
 
+    fun unbound() {
+        disposables.clear()
+    }
 }

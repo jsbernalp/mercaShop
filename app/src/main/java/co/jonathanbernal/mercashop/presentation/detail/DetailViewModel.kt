@@ -11,8 +11,6 @@ import co.jonathanbernal.mercashop.domain.models.Picture
 import co.jonathanbernal.mercashop.domain.models.Product
 import co.jonathanbernal.mercashop.domain.usecase.GetProductUseCase
 import co.jonathanbernal.mercashop.domain.usecase.GetProductUseCase.Result
-import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
-import co.jonathanbernal.mercashop.presentation.results.ResultViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -26,7 +24,7 @@ class DetailViewModel @Inject constructor(
     var pictures: MutableLiveData<List<Picture>> = MutableLiveData()
     var product = ObservableField<Product>()
     var pictureAdapter: PictureAdapter? = null
-    val compositeDisposable = CompositeDisposable()
+    val disposables = CompositeDisposable()
 
     companion object {
         private val TAG = DetailViewModel::class.java.simpleName
@@ -37,7 +35,7 @@ class DetailViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result -> handleGetProductResult(result) }
-                .addTo(compositeDisposable)
+                .addTo(disposables)
     }
 
     fun handleGetProductResult(result: Result){
@@ -67,5 +65,8 @@ class DetailViewModel @Inject constructor(
         return pictureAdapter
     }
 
+    fun unbound() {
+        disposables.clear()
+    }
 
 }
