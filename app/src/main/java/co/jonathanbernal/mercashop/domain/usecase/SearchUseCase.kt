@@ -12,6 +12,7 @@ class SearchUseCase @Inject constructor(
 ) {
 
     sealed class Result {
+        object Loading : Result()
         data class Success(val data: List<Any>) : Result()
         data class Failure(val throwable: Throwable) : Result()
     }
@@ -20,6 +21,7 @@ class SearchUseCase @Inject constructor(
         return iSearchyRepository.searchProducts(search,offset,limit)
                 .map { Result.Success(it) as Result  }
                 .onErrorReturn { Result.Failure(it) }
+                .startWith(Result.Loading)
     }
 
     fun getRecentsSearchs(): Observable<Result> {

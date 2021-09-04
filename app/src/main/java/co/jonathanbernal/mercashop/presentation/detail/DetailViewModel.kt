@@ -1,6 +1,7 @@
 package co.jonathanbernal.mercashop.presentation.detail
 
 import android.util.Log
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import co.jonathanbernal.mercashop.domain.models.Picture
 import co.jonathanbernal.mercashop.domain.models.Product
 import co.jonathanbernal.mercashop.domain.usecase.GetProductUseCase
 import co.jonathanbernal.mercashop.domain.usecase.GetProductUseCase.Result
+import co.jonathanbernal.mercashop.domain.usecase.SearchUseCase
 import co.jonathanbernal.mercashop.presentation.results.ResultViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -20,6 +22,7 @@ class DetailViewModel @Inject constructor(
     private val getProductUseCase: GetProductUseCase,
 ):ViewModel() {
 
+    val progressVisible = ObservableBoolean()
     var pictures: MutableLiveData<List<Picture>> = MutableLiveData()
     var product = ObservableField<Product>()
     var pictureAdapter: PictureAdapter? = null
@@ -38,6 +41,7 @@ class DetailViewModel @Inject constructor(
     }
 
     fun handleGetProductResult(result: Result){
+        progressVisible.set(Result.Loading == result)
         when(result){
             is Result.Success -> {
                 product.set(result.data)

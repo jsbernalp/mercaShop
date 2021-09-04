@@ -10,6 +10,7 @@ class GetProductUseCase  @Inject constructor(
 ) {
 
     sealed class Result {
+        object Loading : Result()
         data class Success(val data: Product) : Result()
         data class Failure(val throwable: Throwable) : Result()
     }
@@ -18,6 +19,7 @@ class GetProductUseCase  @Inject constructor(
         return iProductRepository.getProduct(id)
                 .map { Result.Success(it) as Result }
                 .onErrorReturn { Result.Failure(it) }
+                .startWith(Result.Loading)
     }
 
 }

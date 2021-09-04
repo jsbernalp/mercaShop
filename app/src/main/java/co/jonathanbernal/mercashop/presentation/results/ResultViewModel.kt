@@ -1,6 +1,7 @@
 package co.jonathanbernal.mercashop.presentation.results
 
 import android.util.Log
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import co.jonathanbernal.mercashop.R
@@ -15,6 +16,7 @@ class ResultViewModel @Inject constructor(
         private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
+    val progressVisible = ObservableBoolean()
     var products: MutableLiveData<List<Product>> = MutableLiveData()
     var downloadedProducts = ArrayList<Product>()
     var searchText: MutableLiveData<String> = MutableLiveData()
@@ -43,6 +45,7 @@ class ResultViewModel @Inject constructor(
     }
 
     fun handleSearchResponse(result: Result) {
+        progressVisible.set(Result.Loading == result)
         when (result) {
             is Result.Success -> {
                 this.downloadedProducts.addAll(result.data as List<Product>)
