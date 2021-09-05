@@ -39,7 +39,7 @@ android {
             ext.betaDistributionGroupAliases = "testers"
             firebaseAppDistribution {
                 serviceCredentialsFile = "$project.rootDir/app/mercashop-bdbd7-664b6d96a8eb.json"
-                releaseNotes = "Se implementa el slide de imagenes en el detalle, el precio original y el precio"
+                releaseNotes = "Version 1.0 de MercaShop"
                 groups = "testers"
             }
         }
