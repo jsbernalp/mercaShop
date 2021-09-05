@@ -35,6 +35,9 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    companion object {
+        private val TAG = DetailFragment::class.java.simpleName
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,8 +60,16 @@ class DetailFragment : Fragment() {
         val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewPicture.layoutManager = manager
 
+        val managerAttribute = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewAttribute.layoutManager = managerAttribute
+
         detailViewModel.pictures.observe(viewLifecycleOwner, { pictures ->
             detailViewModel.setData(pictures)
+        })
+
+        detailViewModel.attributes.observe(viewLifecycleOwner,{attributes ->
+            Log.e(TAG,"este es el listado de caracteristicas $attributes")
+            detailViewModel.setDataAttributes(attributes)
         })
 
     }
