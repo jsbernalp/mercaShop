@@ -30,6 +30,10 @@ class DetailViewModel @Inject constructor(
         private val TAG = DetailViewModel::class.java.simpleName
     }
 
+    /**
+     * @author Jonathan Bernal
+     *  Este metodo se encarga de realizar una peticion al caso de uso para obtener el objeto Result y lo envia al metodo handleGetProductResult para que el gestione la respuesta.
+     */
     fun getProductDetail(id: String) {
         getProductUseCase.getProductByIdProduct(id)
                 .subscribeOn(Schedulers.io())
@@ -38,6 +42,12 @@ class DetailViewModel @Inject constructor(
                 .addTo(disposables)
     }
 
+    /**
+     * @author Jonathan Bernal
+     * @param result contiene la respuesta de la peticion realizada en el metodo getProductDetail
+     *      Este metodo se encarga de gestionar la respuesta, validando si es Correcta o Erronea, en el caso de ser correcta le asigna el valor a product y pictures que son un MutableLiveData de esta forma,
+     *      se pintan los datos en la vista. En caso de ser erronea imprime un log con el error.
+     */
     fun handleGetProductResult(result: Result){
         progressVisible.set(Result.Loading == result)
         when(result){
@@ -52,19 +62,38 @@ class DetailViewModel @Inject constructor(
 
     }
 
+
+    /**
+     * @author Jonathan Bernal
+     * @param list listado de Imagenes
+     *      se encarga de enviar el listado de Imagenes obtenidas de los detalles del producto al adapter para de esta forma añadirlos al recyclerview
+     */
     fun setData(list: List<Picture>) {
         pictureAdapter?.setPictureList(list)
     }
 
+    /**
+     * @author Jonathan Bernal
+     * @param position
+     *      se encarga de retornar la imagen para pintarlo en el item utilizando databinding
+     */
     fun getPicture(position: Int): Picture? {
         return pictures.value?.get(position)
     }
 
+    /**
+     * @author Jonathan Bernal
+     *      se encarga de retornar el adapter que utilizara el recyclerview de las imagenes
+     */
     fun getRecyclerPictureAdapter(): PictureAdapter?{
         pictureAdapter = PictureAdapter(this, R.layout.cell_picture)
         return pictureAdapter
     }
 
+    /**
+     * @author Jonathan Bernal
+     *      se encarga de limpiar el disposable una vez se cierra la app.
+     */
     fun unbound() {
         disposables.clear()
     }

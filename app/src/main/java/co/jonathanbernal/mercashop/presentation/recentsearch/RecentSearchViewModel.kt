@@ -28,6 +28,10 @@ class RecentSearchViewModel @Inject constructor(
     }
 
 
+    /**
+     * @author Jonathan Bernal
+     *  Este metodo se encarga de realizar una peticion al caso de uso para obtener el objeto Result y lo envia al metodo handleRecentSearchResponse para que el gestione la respuesta.
+     */
     fun getRecentSearchList(){
         searchUseCase.getRecentsSearchs()
             .subscribeOn(Schedulers.io())
@@ -37,6 +41,13 @@ class RecentSearchViewModel @Inject constructor(
             }.addTo(disposables)
     }
 
+
+    /**
+     * @author Jonathan Bernal
+     * @param result contiene la respuesta de la peticion realizada en el metodo getRecentSearchList
+     *      Este metodo se encarga de gestionar la respuesta, validando si es Correcta o Erronea, en el caso de ser correcta le asigna el valor a suggestions que es un MutableLiveData.
+     *      En caso de ser erronea imprime un log con el error.
+     */
     fun handleRecentSearchResponse(result: Result){
         when(result){
             is Result.Success -> {
@@ -49,24 +60,49 @@ class RecentSearchViewModel @Inject constructor(
         isDownloading = false
     }
 
+    /**
+     * @author Jonathan Bernal
+     * @param position la posicion seleccionada en el recyclerview
+     *  se encarga de enviar el texto de la busqueda reciente seleccionada por medio del MutableLiveData textSuggestion para que el searchview se autocomplete con este.
+     */
     fun selectedSuggestion(position: Int){
         textSuggestion.postValue(suggestions.value?.get(position))
     }
 
+    /**
+     * @author Jonathan Bernal
+     * @param list listado de Busquedas Recientes
+     *      se encarga de enviar el listado de busquedas recientes obtenidas de la base de datos local al adapter para de esta forma añadirlos al recyclerview
+     */
     fun setData(list: List<String>) {
         suggestionAdapter?.setsuggestionList(list)
     }
 
+
+    /**
+     * @author Jonathan Bernal
+     * @param position
+     *      se encarga de retornar el texto de la busqueda reciente para pintarlo en el item utilizando databinding
+     */
     fun getSuggestion(position: Int): String?{
         val suggestions: MutableLiveData<List<String>> = suggestions
         return suggestions.value?.get(position)
     }
 
+
+    /**
+     * @author Jonathan Bernal
+     *      se encarga de retornar el adapter que utilizara el recyclerview
+     */
     fun getRecyclerSuggestionAdapter():SuggestionAdapter?{
         suggestionAdapter = SuggestionAdapter(this, R.layout.cell_suggestion)
         return suggestionAdapter
     }
 
+    /**
+     * @author Jonathan Bernal
+     *      se encarga de limpiar el disposable una vez se cierra la app.
+     */
     fun unbound() {
         disposables.clear()
     }
