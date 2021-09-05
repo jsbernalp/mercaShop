@@ -1,4 +1,4 @@
-package co.jonathanbernal.mercashop.presentation.detail
+package co.jonathanbernal.mercashop.presentation.detail.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import co.jonathanbernal.mercashop.domain.models.Picture
 import androidx.databinding.library.baseAdapters.BR
+import co.jonathanbernal.mercashop.presentation.detail.DetailViewModel
 
 class PictureAdapter internal constructor(var detailViewModel: DetailViewModel, var resource: Int) :
     RecyclerView.Adapter<PictureAdapter.ViewHolder>() {

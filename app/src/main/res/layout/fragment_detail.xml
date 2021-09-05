@@ -5,7 +5,9 @@
     tools:context=".view.MovieDetailFragment">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="productDetail"
             type="co.jonathanbernal.mercashop.presentation.detail.DetailViewModel" />
@@ -40,6 +42,7 @@
             android:layout_marginEnd="20dp"
             android:text="@{productDetail.product.title}"
             android:textAlignment="textStart"
+            android:textColor="@color/black"
             android:textSize="@dimen/normal_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,25 +89,59 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="23dp"
                     android:text="@{String.format(@string/price,productDetail.product.price)}"
-                    android:textSize="@dimen/xlarge_text"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xxlarge_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView_original_price" />
 
                 <TextView
                     android:id="@+id/textView_original_price"
+                    visibility="@{productDetail.product.original_price != null}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:textStyle=""
-                    visibility="@{productDetail.product.original_price != null}"
                     android:text="@{String.format(@string/original_price,productDetail.product.original_price)}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_attribute"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_label_attributes"
+                    app:setAdapter="@{productDetail.recyclerAttributeAdapter}" />
+
+                <TextView
+                    android:id="@+id/textView_label_attributes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Caracteristicas del producto"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/xlarge_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_price" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -113,13 +150,12 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminateTint="@color/yellow_500"
+            android:visibility="@{productDetail.progressVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:indeterminateTint="@color/yellow_500"
-            android:visibility="@{productDetail.progressVisible ? View.VISIBLE : View.GONE}"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

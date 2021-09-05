@@ -9,5 +9,6 @@ data class Product(
     val available_quantity: Int,
     val sold_quantity: Int,
     val thumbnail: String,
-    val pictures: List<Picture>
+    val pictures: List<Picture>,
+    val attributes: List<Attribute>
     )
