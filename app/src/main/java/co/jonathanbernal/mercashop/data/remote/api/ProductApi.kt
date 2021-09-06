@@ -10,6 +10,12 @@ class ProductApi @Inject constructor(
     private val mercaService: MercaService
 ) {
 
+    /**
+     * @author Jonathan Bernal
+     * @param idProduct
+     * @return List<ProductResponse>
+     *     Se encarga de realizar la peticion al api para obtener un producto a partir de su Id
+     */
     fun getProcessById(idProduct: String): Observable<List<ProductResponse>> {
         return mercaService.getProduct(idProduct)
     }

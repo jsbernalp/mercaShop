@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="productList"
             type="co.jonathanbernal.mercashop.presentation.results.ResultViewModel" />
@@ -29,6 +30,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setAdapter="@{productList.recyclerProductAdapter}"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:indeterminateTint="@color/yellow_500"
+            android:visibility="@{productList.progressVisible ? View.VISIBLE : View.GONE}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

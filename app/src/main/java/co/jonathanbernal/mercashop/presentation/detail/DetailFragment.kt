@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.jonathanbernal.mercashop.R
+import co.jonathanbernal.mercashop.common.utils.isOnline
+import co.jonathanbernal.mercashop.common.utils.toast
 import co.jonathanbernal.mercashop.databinding.FragmentDetailBinding
 import co.jonathanbernal.mercashop.presentation.di.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
@@ -33,23 +35,41 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    companion object {
+        private val TAG = DetailFragment::class.java.simpleName
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
         val product = arguments?.getString("idProduct")
-        Log.e("Prueba","este es el producto que se recibe $product")
+        Log.e("Prueba", "este es el producto que se recibe $product")
 
         detailViewModel = activity.run {
             ViewModelProvider(this!!, viewModelFactory)[DetailViewModel::class.java]
         }
-        detailViewModel.getProductDetail(product!!)
+
+        if (isOnline(requireContext())) {
+            detailViewModel.getProductDetail(product!!)
+        } else {
+            requireContext().toast(R.string.isNotOnline)
+        }
+
         binding.productDetail = detailViewModel
-        val manager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+
+        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewPicture.layoutManager = manager
 
-        detailViewModel.pictures.observe(viewLifecycleOwner,{pictures->
+        val managerAttribute = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewAttribute.layoutManager = managerAttribute
+
+        detailViewModel.pictures.observe(viewLifecycleOwner, { pictures ->
             detailViewModel.setData(pictures)
+        })
+
+        detailViewModel.attributes.observe(viewLifecycleOwner,{attributes ->
+            Log.e(TAG,"este es el listado de caracteristicas $attributes")
+            detailViewModel.setDataAttributes(attributes)
         })
 
     }
